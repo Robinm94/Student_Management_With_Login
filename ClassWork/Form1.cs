@@ -14,7 +14,6 @@ namespace ClassWork
     {
         private StudentDB students = new StudentDB();
         private int selectedIndex = 0;
-        private string[] separators = { " - ", "|" };
         private string default_display_text = "Display Selected Student's Assignments";
         public Form1()
         {
@@ -23,27 +22,26 @@ namespace ClassWork
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            LoadStudentListBox();
+            LoadStudentGridView();
         }
 
-        private void LoadStudentListBox()
+        private void LoadStudentGridView()
         {
-            lstStudents.Items.Clear();
+            gridViewStudents.DataSource = null;
+            studentBindingSource.DataSource = students.GetAllStudents();
+            gridViewStudents.DataSource = studentBindingSource;
 
-            foreach (Student student in students.GetAllStudents())
+            if (gridViewStudents.Rows.Count > selectedIndex)
             {
-                lstStudents.Items.Add(student.ToString());
-            }
-
-            if (lstStudents.Items.Count > 0)
-            {
-                lstStudents.SelectedIndex = selectedIndex;
+                gridViewStudents.Rows[selectedIndex].Selected = true;
             }
             else
             {
                 ClearData();
+                lblStudentAssignment.Text = default_display_text;
+                gridItemMarks.ClearSelection();
+                gridItemMarks.Rows.Clear();
             }
-            lstStudents.Focus();
         }
 
         private void ClearData()
@@ -53,18 +51,21 @@ namespace ClassWork
             txtAverage.Text = string.Empty;
         }
 
-        private void LstStudents_SelectedIndexChanged(object sender, EventArgs e)
+        private void GridViewStudents_SelectionChanged(object sender, EventArgs e)
         {
-            if (lstStudents.SelectedIndex != -1)
+            if (gridViewStudents.SelectedRows.Count > 0)
             {
-                selectedIndex = lstStudents.SelectedIndex;
-                string student = lstStudents.SelectedItem.ToString();
-                String[] studentInfo = student.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-                Student selectedStudent = students.FindStudent(new Student(studentInfo[0], studentInfo[1]));
-
+                selectedIndex = gridViewStudents.SelectedRows[0].Index;
+                DataGridViewRow row = gridViewStudents.Rows[selectedIndex];
+                Student selectedStudent = students.FindStudent(new Student(row.Cells[0].Value.ToString()));
+                if (selectedStudent == null)
+                {
+                    MessageBox.Show("Unable to find student", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 txtScoreTotal.Text = selectedStudent.TotalScore.ToString();
                 txtMaxTotal.Text = selectedStudent.TotalMaxScore.ToString();
-                double avg = studentInfo.Length == 2 ? 0 : selectedStudent.TotalScore / selectedStudent.TotalMaxScore;
+                double avg = selectedStudent.TotalMaxScore == 0 ? 0 : selectedStudent.TotalScore / selectedStudent.TotalMaxScore;
                 txtAverage.Text = (avg).ToString("p2");
                 gridItemMarks.Rows.Clear();
                 foreach (Assignment assignment in selectedStudent.Assignments)
@@ -74,7 +75,7 @@ namespace ClassWork
                         gridItemMarks.Rows.Add(assignment.AssignmentId, assignment.Score, assignment.MaxScore);
                     }
                 }
-                lblStudentAssignment.Text = $"Assignment Details for {selectedStudent.StudentId} - {selectedStudent.Name}:";
+                lblStudentAssignment.Text = $"Assignment Details for {selectedStudent.StudentId} - {selectedStudent.FirstName} {selectedStudent.LastName}:";
                 gridItemMarks.ClearSelection();
             }
             else
@@ -102,15 +103,14 @@ namespace ClassWork
                     }
                     students.AddStudent(newStudent);
                 }
-                LoadStudentListBox();
+                LoadStudentGridView();
             }
             else if (rdbUpdate.Checked)
             {
-                if (lstStudents.SelectedIndex != -1)
+                if (gridViewStudents.SelectedRows.Count > 0)
                 {
-                    string student = lstStudents.SelectedItem.ToString();
-                    String[] studentInfo = student.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-                    Student studentToUpdate = students.FindStudent(new Student(studentInfo[0], studentInfo[1]));
+                    string studentId = gridViewStudents.Rows[selectedIndex].Cells[0].Value.ToString();
+                    Student studentToUpdate = students.FindStudent(new Student(studentId));
                     if (studentToUpdate == null)
                     {
                         MessageBox.Show("Unable to find student", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -127,7 +127,7 @@ namespace ClassWork
                             return;
                         }
                     }
-                    LoadStudentListBox();
+                    LoadStudentGridView();
                 }
                 else
                 {
@@ -136,18 +136,16 @@ namespace ClassWork
             }
             else if (rdbDelete.Checked)
             {
-                if (lstStudents.SelectedIndex != -1)
+                if (gridViewStudents.SelectedRows.Count > 0)
                 {
-                    selectedIndex = lstStudents.SelectedIndex;
-                    string student = lstStudents.SelectedItem.ToString();
-                    String[] studentInfo = student.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-                    if (!students.RemoveStudent(new Student(studentInfo[0], studentInfo[1])))
+                    string studentId = gridViewStudents.Rows[selectedIndex].Cells[0].Value.ToString();
+                    if (!students.RemoveStudent(new Student(studentId)))
                     {
                         MessageBox.Show("Unable to Remove student", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                     selectedIndex = 0;
-                    LoadStudentListBox();
+                    LoadStudentGridView();
                 }
                 else
                 {
@@ -174,41 +172,50 @@ namespace ClassWork
 
         private void UpdateStudentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (lstStudents.Items.Count == 0)
+            if (gridViewStudents.Rows.Count == 0)
             {
                 MessageBox.Show("Please add a student before updating", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             StudentSelectionForm studentSelectionForm = new StudentSelectionForm();
-            studentSelectionForm.lstStudentSelection.Items.AddRange(lstStudents.Items);
+            foreach (DataGridViewRow row in gridViewStudents.Rows)
+            {
+                studentSelectionForm.lstStudentSelection.Items.Add(row.Cells[0].Value.ToString() + " - " + row.Cells[1].Value.ToString() + " " + row.Cells[2].Value.ToString());
+            }
             studentSelectionForm.ShowDialog();
             int selectionIndex = studentSelectionForm.selectedStudentIndex;
             if (selectionIndex < 0)
             {
                 return;
             }
-            lstStudents.SelectedIndex = selectionIndex;
+            selectedIndex = selectionIndex;
+            gridViewStudents.Rows[selectedIndex].Selected = true;
             this.rdbUpdate.Checked = true;
             BtnPerform_Click(this, e);
         }
 
         private void DeleteStudentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (lstStudents.Items.Count == 0)
+            if (gridViewStudents.Rows.Count == 0)
             {
                 MessageBox.Show("Please add a student before removing", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             StudentSelectionForm studentSelectionForm = new StudentSelectionForm();
-            studentSelectionForm.lstStudentSelection.Items.AddRange(lstStudents.Items);
+            foreach (DataGridViewRow row in gridViewStudents.Rows)
+            {
+                studentSelectionForm.lstStudentSelection.Items.Add(row.Cells[0].Value.ToString() + " - " + row.Cells[1].Value.ToString() + " " + row.Cells[2].Value.ToString());
+            }
             studentSelectionForm.ShowDialog();
             int selectionIndex = studentSelectionForm.selectedStudentIndex;
             if (selectionIndex < 0)
             {
                 return;
             }
+            gridViewStudents.Rows[selectionIndex].Selected = true;
             this.rdbDelete.Checked = true;
             BtnPerform_Click(this, e);
         }
+        
     }
 }

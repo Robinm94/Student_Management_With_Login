@@ -18,7 +18,7 @@ namespace ClassWork
         public AddStudentForm()
         {
             InitializeComponent();
-            NewStudent = new Student("", "");
+            NewStudent = new Student("","","",0,"","");
         }
 
         private void BtnAddItem_Click(object sender, EventArgs e)
@@ -110,14 +110,41 @@ namespace ClassWork
             {
                 errProvider.SetError(txtStudentId, String.Empty);
             }
-            if (txtStudentName.Text.Equals(String.Empty))
+            if(txtFname.Text.Equals(String.Empty))
             {
-                errProvider.SetError(txtStudentName, "Please Enter Student Name");
+                errProvider.SetError(txtFname, "Please Enter First Name");
                 return;
             }
             else
             {
-                errProvider.SetError(txtStudentName, String.Empty);
+                errProvider.SetError(txtFname, String.Empty);
+            }
+            if (txtLname.Text.Equals(String.Empty))
+            {
+                errProvider.SetError(txtLname, "Please Enter Last Name");
+                return;
+            }
+            else
+            {
+                errProvider.SetError(txtLname, String.Empty);
+            }
+            if (txtClassName.Text.Equals(String.Empty))
+            {
+                errProvider.SetError(txtClassName, "Please Enter Class Name");
+                return;
+            }
+            else
+            {
+                errProvider.SetError(txtClassName, String.Empty);
+            }
+            if (txtGender.Text.Equals(String.Empty))
+            {
+                errProvider.SetError(txtGender, "Please Enter Gender");
+                return;
+            }
+            else
+            {
+                errProvider.SetError(txtGender, String.Empty);
             }
             if (gridItemMarks.RowCount == 0)
             {
@@ -126,7 +153,11 @@ namespace ClassWork
                 {
                     AddStudentFlag = true;
                     NewStudent.StudentId = txtStudentId.Text;
-                    NewStudent.Name = txtStudentName.Text;
+                    NewStudent.FirstName = txtFname.Text;
+                    NewStudent.LastName = txtLname.Text;
+                    NewStudent.Age = Convert.ToInt32(numAge.Value);
+                    NewStudent.Gender = txtGender.Text;
+                    NewStudent.ClassName = txtClassName.Text;
                     this.Close();
                 }
             }
@@ -134,7 +165,11 @@ namespace ClassWork
             {
                 AddStudentFlag = true;
                 NewStudent.StudentId = txtStudentId.Text;
-                NewStudent.Name = txtStudentName.Text;
+                NewStudent.FirstName = txtFname.Text;
+                NewStudent.LastName = txtLname.Text;
+                NewStudent.Age = Convert.ToInt32(numAge.Value);
+                NewStudent.Gender = txtGender.Text;
+                NewStudent.ClassName = txtClassName.Text;
                 this.Close();
             }
         }

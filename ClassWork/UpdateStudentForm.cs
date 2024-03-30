@@ -22,9 +22,13 @@ namespace ClassWork
             UpdateStudent = studentToUpdate;
             if (studentToUpdate != null)
             {
-                NewUpdatedStudent = new Student(studentToUpdate.StudentId, studentToUpdate.Name);
+                NewUpdatedStudent = new Student(studentToUpdate.StudentId, studentToUpdate.FirstName, studentToUpdate.LastName,studentToUpdate.Age, studentToUpdate.ClassName, studentToUpdate.Gender);
                 txtStudentID.Text = studentToUpdate.StudentId;
-                txtStudentName.Text = studentToUpdate.Name;
+                txtFname.Text = studentToUpdate.FirstName;
+                txtLname.Text = studentToUpdate.LastName;
+                numAge.Value = studentToUpdate.Age;
+                txtGender.Text = studentToUpdate.Gender;
+                txtClassName.Text = studentToUpdate.ClassName;
                 CloneAssignments();
             }
         }
@@ -121,7 +125,48 @@ namespace ClassWork
 
         private void BtnUpdateStdnt_Click(object sender, EventArgs e)
         {
+            if (txtFname.Text.Equals(String.Empty))
+            {
+                errProvider.SetError(txtFname, "Please Enter First Name");
+                return;
+            }
+            else
+            {
+                errProvider.SetError(txtFname, String.Empty);
+            }
+            if (txtLname.Text.Equals(String.Empty))
+            {
+                errProvider.SetError(txtLname, "Please Enter Last Name");
+                return;
+            }
+            else
+            {
+                errProvider.SetError(txtLname, String.Empty);
+            }
+            if (txtClassName.Text.Equals(String.Empty))
+            {
+                errProvider.SetError(txtClassName, "Please Enter Class Name");
+                return;
+            }
+            else
+            {
+                errProvider.SetError(txtClassName, String.Empty);
+            }
+            if (txtGender.Text.Equals(String.Empty))
+            {
+                errProvider.SetError(txtGender, "Please Enter Gender");
+                return;
+            }
+            else
+            {
+                errProvider.SetError(txtGender, String.Empty);
+            }
             UpdateFlag = true;
+            NewUpdatedStudent.FirstName = txtFname.Text;
+            NewUpdatedStudent.LastName = txtLname.Text;
+            NewUpdatedStudent.Age = Convert.ToInt32(numAge.Value);
+            NewUpdatedStudent.Gender = txtGender.Text;
+            NewUpdatedStudent.ClassName = txtClassName.Text;
             this.Close();
         }
 

@@ -1,0 +1,11 @@
+124441 - Robin - Mathew - 26 - ITC1 - Male|1223 - 90 - 100|2333 - 94 - 100|13444 - 89 - 100|2555 - 81 - 90|LAB - 10 - 13
+144442 - Jack - Thomas - 27 - ITC3 - Male|1422 - 45 - 50|1431 - 48 - 50
+234545 - Emily - Wilson - 33 - ITC2 - Female|1423 - 48 - 50
+336689 - Michael - Johnson - 25 - ITC4 - Male|1424 - 44 - 50|1425 - 47 - 50
+448911 - Sarah - Thompson - 29 - ITC1 - Female|1425 - 47 - 50
+550132 - Christopher - Martinez - 31 - ITC5 - Male|1426 - 42 - 50|1428 - 42 - 45
+662377 - Jessica - Rodriguez - 28 - ITC2 - Female|1427 - 49 - 50
+774510 - Matthew - Lee - 30 - ITC4 - Male|1428 - 46 - 50|2555 - 81 - 90
+886764 - Ashley - Harris - 26 - ITC3 - Female|1429 - 43 - 50|1431 - 50 - 50
+998981 - David - Davis - 32 - ITC1 - Male|1430 - 45 - 50|1427 - 35 - 40
+100234 - Olivia - Clark - 34 - ITC5 - Female|1431 - 50 - 50|1425 - 47 - 50|1429 - 28 - 35
