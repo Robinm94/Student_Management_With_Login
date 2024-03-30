@@ -65,6 +65,8 @@
             this.gradeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.studentBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.assignmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.txtSearch = new System.Windows.Forms.TextBox();
+            this.btnSearch = new System.Windows.Forms.Button();
             this.grpOperation.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridItemMarks)).BeginInit();
@@ -81,7 +83,7 @@
             this.grpOperation.Controls.Add(this.rdbUpdate);
             this.grpOperation.Controls.Add(this.rdbAddNew);
             this.grpOperation.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpOperation.Location = new System.Drawing.Point(897, 343);
+            this.grpOperation.Location = new System.Drawing.Point(890, 350);
             this.grpOperation.Name = "grpOperation";
             this.grpOperation.Size = new System.Drawing.Size(200, 233);
             this.grpOperation.TabIndex = 1;
@@ -147,7 +149,7 @@
             // txtScoreTotal
             // 
             this.txtScoreTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtScoreTotal.Location = new System.Drawing.Point(743, 387);
+            this.txtScoreTotal.Location = new System.Drawing.Point(736, 394);
             this.txtScoreTotal.Name = "txtScoreTotal";
             this.txtScoreTotal.ReadOnly = true;
             this.txtScoreTotal.Size = new System.Drawing.Size(100, 26);
@@ -157,7 +159,7 @@
             // txtMaxTotal
             // 
             this.txtMaxTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMaxTotal.Location = new System.Drawing.Point(743, 445);
+            this.txtMaxTotal.Location = new System.Drawing.Point(736, 452);
             this.txtMaxTotal.Name = "txtMaxTotal";
             this.txtMaxTotal.ReadOnly = true;
             this.txtMaxTotal.Size = new System.Drawing.Size(100, 26);
@@ -167,7 +169,7 @@
             // txtAverage
             // 
             this.txtAverage.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAverage.Location = new System.Drawing.Point(743, 504);
+            this.txtAverage.Location = new System.Drawing.Point(736, 511);
             this.txtAverage.Name = "txtAverage";
             this.txtAverage.ReadOnly = true;
             this.txtAverage.Size = new System.Drawing.Size(100, 26);
@@ -178,7 +180,7 @@
             // 
             this.lblStudents.AutoSize = true;
             this.lblStudents.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStudents.Location = new System.Drawing.Point(34, 44);
+            this.lblStudents.Location = new System.Drawing.Point(27, 51);
             this.lblStudents.Name = "lblStudents";
             this.lblStudents.Size = new System.Drawing.Size(75, 20);
             this.lblStudents.TabIndex = 5;
@@ -188,7 +190,7 @@
             // 
             this.lblScoreTotal.AutoSize = true;
             this.lblScoreTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblScoreTotal.Location = new System.Drawing.Point(631, 390);
+            this.lblScoreTotal.Location = new System.Drawing.Point(624, 397);
             this.lblScoreTotal.Name = "lblScoreTotal";
             this.lblScoreTotal.Size = new System.Drawing.Size(97, 20);
             this.lblScoreTotal.TabIndex = 6;
@@ -198,7 +200,7 @@
             // 
             this.lblScoreCount.AutoSize = true;
             this.lblScoreCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblScoreCount.Location = new System.Drawing.Point(631, 448);
+            this.lblScoreCount.Location = new System.Drawing.Point(624, 455);
             this.lblScoreCount.Name = "lblScoreCount";
             this.lblScoreCount.Size = new System.Drawing.Size(91, 20);
             this.lblScoreCount.TabIndex = 7;
@@ -208,7 +210,7 @@
             // 
             this.lblAverage.AutoSize = true;
             this.lblAverage.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAverage.Location = new System.Drawing.Point(631, 507);
+            this.lblAverage.Location = new System.Drawing.Point(624, 514);
             this.lblAverage.Name = "lblAverage";
             this.lblAverage.Size = new System.Drawing.Size(67, 20);
             this.lblAverage.TabIndex = 8;
@@ -283,7 +285,7 @@
             this.clmAssignmentId,
             this.clmMarks,
             this.clmMaxMarks});
-            this.gridItemMarks.Location = new System.Drawing.Point(38, 366);
+            this.gridItemMarks.Location = new System.Drawing.Point(31, 373);
             this.gridItemMarks.MultiSelect = false;
             this.gridItemMarks.Name = "gridItemMarks";
             this.gridItemMarks.ReadOnly = true;
@@ -326,7 +328,7 @@
             // 
             this.lblStudentAssignment.AutoSize = true;
             this.lblStudentAssignment.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.lblStudentAssignment.Location = new System.Drawing.Point(34, 339);
+            this.lblStudentAssignment.Location = new System.Drawing.Point(27, 346);
             this.lblStudentAssignment.Name = "lblStudentAssignment";
             this.lblStudentAssignment.Size = new System.Drawing.Size(312, 20);
             this.lblStudentAssignment.TabIndex = 101;
@@ -355,8 +357,7 @@
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.gridViewStudents.DefaultCellStyle = dataGridViewCellStyle1;
-            this.gridViewStudents.Location = new System.Drawing.Point(38, 67);
-            this.gridViewStudents.MultiSelect = false;
+            this.gridViewStudents.Location = new System.Drawing.Point(31, 74);
             this.gridViewStudents.Name = "gridViewStudents";
             this.gridViewStudents.ReadOnly = true;
             this.gridViewStudents.RowHeadersWidth = 51;
@@ -442,12 +443,33 @@
             // 
             this.assignmentBindingSource.DataSource = typeof(ClassWork.Assignment);
             // 
+            // txtSearch
+            // 
+            this.txtSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.txtSearch.Location = new System.Drawing.Point(796, 42);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(175, 26);
+            this.txtSearch.TabIndex = 103;
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.btnSearch.Location = new System.Drawing.Point(977, 42);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(113, 29);
+            this.btnSearch.TabIndex = 104;
+            this.btnSearch.Text = "Search";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.BtnSearch_Click);
+            // 
             // Form1
             // 
             this.AcceptButton = this.btnPerform;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1132, 603);
+            this.ClientSize = new System.Drawing.Size(1132, 618);
+            this.Controls.Add(this.btnSearch);
+            this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.gridViewStudents);
             this.Controls.Add(this.lblStudentAssignment);
             this.Controls.Add(this.gridItemMarks);
@@ -514,6 +536,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn genderDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn classNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn gradeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.TextBox txtSearch;
+        private System.Windows.Forms.Button btnSearch;
     }
 }
 

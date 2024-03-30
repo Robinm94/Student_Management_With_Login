@@ -216,6 +216,28 @@ namespace ClassWork
             this.rdbDelete.Checked = true;
             BtnPerform_Click(this, e);
         }
-        
+
+        private void BtnSearch_Click(object sender, EventArgs e)
+        {
+            string searchText = txtSearch.Text;
+            if (string.IsNullOrEmpty(searchText))
+            {
+                LoadStudentGridView();
+                return;
+            }
+            gridViewStudents.ClearSelection();
+
+            var matchingRows = gridViewStudents.Rows.Cast<DataGridViewRow>()
+                .Where(row => row.Cells[0].Value.ToString().ToLower().Contains(searchText.ToLower()) ||
+                              row.Cells[1].Value.ToString().ToLower().Contains(searchText.ToLower()) ||
+                              row.Cells[2].Value.ToString().ToLower().Contains(searchText.ToLower()));
+
+            // Select (highlight) the matching rows
+            foreach (var row in matchingRows)
+            {
+                row.Selected = true;
+            }
+
+        }
     }
 }
